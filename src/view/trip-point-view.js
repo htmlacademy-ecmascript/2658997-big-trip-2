@@ -1,12 +1,12 @@
 import AbstractView from '../framework/view/abstract-view';
 
-function createOffersTemplate (offer) {
+function createOfferTemplate (offer) {
   return `
     <li class="event__offer">
-        <span class="event__offer-title">${offer.title}</span>
-        &plus;&euro;&nbsp;
-        <span class="event__offer-price">${offer.price}</span>
-      </li>
+      <span class="event__offer-title">${offer.title}</span>
+      &plus;&euro;&nbsp;
+      <span class="event__offer-price">${offer.price}</span>
+    </li>
   `;
 }
 
@@ -16,7 +16,7 @@ function createTripPointTemplate(point, destination, offers) {
   const favoriteClassName = isFavorite ? 'event__favorite-btn--active' : '';
 
   const offersTemplate = offers
-    .map((offerItem) => createOffersTemplate(offerItem))
+    .map((offerItem) => createOfferTemplate(offerItem))
     .join('');
 
   return `<li class="trip-events__item">
@@ -58,15 +58,27 @@ export default class TripPointView extends AbstractView {
   #point = null;
   #destination = null;
   #offers = null;
+  #handleEditClick = null;
 
-  constructor ({point, destination, offers}) {
+  constructor ({point, destination, offers, onEditClick}) {
     super();
+
     this.#point = point;
     this.#destination = destination;
     this.#offers = offers;
+
+    this.#handleEditClick = onEditClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#editClickHandler);
   }
 
   get template() {
     return createTripPointTemplate(this.#point, this.#destination, this.#offers);
   }
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleEditClick();
+  };
 }

@@ -1,7 +1,7 @@
 import {RenderPosition, render } from './framework/render.js';
 
 import TripInfoView from './view/trip-info-view.js';
-import TripFilterView from './view/trip-filter-view.js';
+import TripFiltersView from './view/trip-filters-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import PointsModel from './model/points-model.js';
 
@@ -21,6 +21,6 @@ const boardPresenter = new BoardPresenter({
 });
 
 render(new TripInfoView(), tripMainElement, RenderPosition.AFTERBEGIN);
-render(new TripFilterView(), tripControlsElement);
+render(new TripFiltersView(), tripControlsElement);
 
 boardPresenter.init();
