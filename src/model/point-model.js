@@ -2,7 +2,7 @@ import { mockPoints } from '../mock/points.js';
 import { mockDestinations } from '../mock/destinations.js';
 import { mockOffers } from '../mock/offers.js';
 
-export default class PointsModel {
+export default class PointModel {
 
   #pointsData = mockPoints;
   #destinationsData = mockDestinations;

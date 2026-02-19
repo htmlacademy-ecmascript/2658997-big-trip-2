@@ -10,11 +10,13 @@ export default class BoardPresenter {
 
   #container = null;
   #pointsModel = null;
+  #sortsModel = null;
   #eventsListComponent = new EventsListView();
 
-  constructor({container, pointsModel}) {
+  constructor({container, pointModel, sortModel}) {
     this.#container = container;
-    this.#pointsModel = pointsModel;
+    this.#pointsModel = pointModel;
+    this.#sortsModel = sortModel;
   }
 
   init() {
@@ -76,8 +78,9 @@ export default class BoardPresenter {
     const points = [...this.#pointsModel.points];
     const destinations = this.#pointsModel.destinations;
     const offers = this.#pointsModel.offers;
+    const sorts = [...this.#sortsModel.sort];
 
-    render(new TripSortView(), this.#container);
+    render(new TripSortView({sorts}), this.#container);
     render(this.#eventsListComponent, this.#container);
 
     for (let i = 0; i < points.length; i++) {
