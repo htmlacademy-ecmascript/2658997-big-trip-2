@@ -8,17 +8,17 @@ export const mockDestinations = [
     name: 'Moscow',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]
@@ -30,12 +30,12 @@ export const mockDestinations = [
     name: 'Paris',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]
@@ -47,27 +47,27 @@ export const mockDestinations = [
     name: 'Tokio',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]
@@ -79,17 +79,17 @@ export const mockDestinations = [
     name: 'Rome',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]
@@ -101,17 +101,17 @@ export const mockDestinations = [
     name: 'Minsk',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]
@@ -123,22 +123,22 @@ export const mockDestinations = [
     name: 'London',
     pictures: [
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       },
 
       {
-        src: `https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        src: `https://loremflickr.com/248/152?random=${getRandomNumber(1, 20)}`,
         description: getRandomArrayElement(DESCRIPTIONS)
       }
     ]

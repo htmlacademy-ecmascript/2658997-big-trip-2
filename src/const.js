@@ -10,9 +10,15 @@ const DESCRIPTIONS = [
   'In rutrum ac purus sit amet tempus.'
 ];
 
+const NO_POINTS_MESSAGES = {
+  everything: 'Click New Event to create your first point',
+  past: 'There are no past events now',
+  present: 'There are no present events now',
+  future: 'There are no future events now'
+};
+
 const POINTS_COUNT = 3;
 
 const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-
-export { DESCRIPTIONS, POINTS_COUNT, TRIP_TYPES };
+export { DESCRIPTIONS, POINTS_COUNT, TRIP_TYPES, NO_POINTS_MESSAGES };
