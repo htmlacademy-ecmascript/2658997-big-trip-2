@@ -21,4 +21,12 @@ const POINTS_COUNT = 3;
 
 const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-export { DESCRIPTIONS, POINTS_COUNT, TRIP_TYPES, NO_POINTS_MESSAGES };
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers'
+};
+
+export { DESCRIPTIONS, POINTS_COUNT, TRIP_TYPES, NO_POINTS_MESSAGES, SortType };
