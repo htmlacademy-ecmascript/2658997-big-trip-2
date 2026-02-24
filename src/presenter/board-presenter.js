@@ -16,8 +16,6 @@ export default class BoardPresenter {
 
   #pointPresenters = new Map();
 
-  #currentSortType = SortType.PRICE;
-
   constructor({container, pointModel, sortModel}) {
     this.#container = container;
     this.#pointsModel = pointModel;
@@ -49,13 +47,15 @@ export default class BoardPresenter {
         this.#pointsModel.points.sort(sortPointPrice);
         break;
     }
-    this.#currentSortType = sortType;
+    this.#sortsModel.activeSort = sortType;
   }
 
   #handleSortTypeChange = (sortType) => {
-    if (this.#currentSortType === sortType) {
+    if (this.#sortsModel.activeSort === sortType) {
       return;
     }
+
+    this.#sortsModel.activeSort = sortType;
 
     this.#sortPoints(sortType);
     this.#clearPointList();
