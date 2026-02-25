@@ -12,4 +12,12 @@ function humanizeTripDueDate(date, format) {
   return date ? dayjs(date).format(format) : '';
 }
 
-export {getRandomArrayElement, getRandomNumber, humanizeTripDueDate};
+function sortPointDay(pointA, pointB) {
+  return dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
+}
+
+function sortPointPrice(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
+
+export {getRandomArrayElement, getRandomNumber, humanizeTripDueDate, sortPointDay, sortPointPrice};

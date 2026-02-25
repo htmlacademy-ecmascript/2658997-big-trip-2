@@ -1,8 +1,10 @@
+import { SortType } from '../const.js';
+import { sortPointDay, sortPointPrice } from '../utils.js';
 import { render } from '../framework/render.js';
 import EventsListView from '../view/events-list-view.js';
 import TripSortView from '../view/trip-sort-view.js';
-import PointPresenter from './point-presenter.js';
 import NoPointsView from '../view/no-points-view.js';
+import PointPresenter from './point-presenter.js';
 
 
 export default class BoardPresenter {
@@ -25,8 +27,40 @@ export default class BoardPresenter {
       render(new NoPointsView(), this.#container);
       return;
     }
+
+    this.#renderSort();
+    render(this.#eventsListComponent, this.#container);
     this.#renderBoard();
   }
+
+  #clearPointList() {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+  }
+
+  #sortPoints(sortType) {
+    switch (sortType) {
+      case SortType.DAY:
+        this.#pointsModel.points.sort(sortPointDay);
+        break;
+      case SortType.PRICE:
+        this.#pointsModel.points.sort(sortPointPrice);
+        break;
+    }
+    this.#sortsModel.activeSort = sortType;
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#sortsModel.activeSort === sortType) {
+      return;
+    }
+
+    this.#sortsModel.activeSort = sortType;
+
+    this.#sortPoints(sortType);
+    this.#clearPointList();
+    this.#renderBoard();
+  };
 
   #handlePointChange = (updatedPoint) => {
     this.#pointPresenters.get(updatedPoint.id).init(
@@ -52,14 +86,19 @@ export default class BoardPresenter {
     this.#pointPresenters.set(point.id, pointPresenter);
   }
 
+  #renderSort() {
+    const sorts = [...this.#sortsModel.sort];
+
+    render(new TripSortView({
+      sorts,
+      onSortTypeChange: this.#handleSortTypeChange
+    }), this.#container);
+  }
+
   #renderBoard() {
     const points = [...this.#pointsModel.points];
     const destinations = this.#pointsModel.destinations;
     const offers = this.#pointsModel.offers;
-    const sorts = [...this.#sortsModel.sort];
-
-    render(new TripSortView({sorts}), this.#container);
-    render(this.#eventsListComponent, this.#container);
 
     points.forEach((point) => this.#renderPoint(point, destinations, offers));
   }

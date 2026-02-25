@@ -1,8 +1,9 @@
 import AbstractView from '../framework/view/abstract-view';
+import { SortType } from '../const.js';
 
 function createSortTemplate (sort) {
-  const isDisabled = ['event', 'offers'].includes(sort);
-  const isActive = sort === 'price';
+  const isDisabled = [SortType.EVENT, SortType.OFFERS].includes(sort);
+  const isActive = sort === SortType.PRICE;
 
   return `
     <div class="trip-sort__item  trip-sort__item--${sort}">
@@ -11,6 +12,7 @@ function createSortTemplate (sort) {
              type="radio"
              name="trip-sort"
              value="sort-${sort}"
+             data-sort-type="${sort}"
              ${isActive ? 'checked' : ''}
              ${isDisabled ? 'disabled' : ''}
       >
@@ -31,11 +33,24 @@ function createTripSortTemplate(sorts) {
 
 export default class TripSortView extends AbstractView {
   #sorts = [];
+  #handleSortTypeChange = null;
 
-  constructor({sorts}) {
+  constructor({sorts, onSortTypeChange}) {
     super();
     this.#sorts = sorts;
+
+    this.#handleSortTypeChange = onSortTypeChange;
+
+    this.element.addEventListener('change', this.#sortTypeChangeHandler);
   }
+
+  #sortTypeChangeHandler = (evt) => {
+    if(evt.target.tagName !== 'INPUT') {
+      return;
+    }
+
+    this.#handleSortTypeChange(evt.target.dataset.sortType);
+  };
 
   get template() {
     return createTripSortTemplate(this.#sorts);
