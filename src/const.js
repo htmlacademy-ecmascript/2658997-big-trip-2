@@ -1,3 +1,5 @@
+const POINTS_COUNT = 3;
+
 const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
@@ -10,16 +12,14 @@ const DESCRIPTIONS = [
   'In rutrum ac purus sit amet tempus.'
 ];
 
+const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+
 const NO_POINTS_MESSAGES = {
   everything: 'Click New Event to create your first point',
-  past: 'There are no past events now',
+  future: 'There are no future events now',
   present: 'There are no present events now',
-  future: 'There are no future events now'
+  past: 'There are no past events now',
 };
-
-const POINTS_COUNT = 3;
-
-const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 const SortType = {
   DAY: 'day',
@@ -29,4 +29,32 @@ const SortType = {
   OFFERS: 'offers'
 };
 
-export { DESCRIPTIONS, POINTS_COUNT, TRIP_TYPES, NO_POINTS_MESSAGES, SortType };
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
+};
+
+const UserAction = {
+  UPDATE_POINT: 'update-point',
+  ADD_POINT: 'add-point',
+  DELETE_POINT: 'delete-point',
+};
+
+const UpdateType = {
+  PATCH: 'patch',
+  MINOR: 'minor',
+  MAJOR: 'major',
+};
+
+export {
+  DESCRIPTIONS,
+  POINTS_COUNT,
+  TRIP_TYPES,
+  NO_POINTS_MESSAGES,
+  SortType,
+  FilterType,
+  UserAction,
+  UpdateType,
+};

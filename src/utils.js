@@ -1,3 +1,4 @@
+import { FilterType } from './const.js';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -43,4 +44,31 @@ function sortPointPrice(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
-export {getRandomArrayElement, getRandomNumber, humanizeTripDueDate, getPointDuration, sortPointDay, sortPointPrice};
+function isPointFuture(dateFrom) {
+  return dayjs().isBefore(dateFrom);
+}
+
+function isPointPresent(dateFrom, dateTo) {
+  return dayjs().isSame(dateFrom, 'day') || (dayjs().isAfter(dateFrom, 'day') && dayjs().isBefore(dateTo, 'day'));
+}
+
+function isPointPast(dateTo) {
+  return dayjs().isAfter(dateTo, 'day');
+}
+
+const filter = {
+  [FilterType.EVERYTHING]: (points) => points,
+  [FilterType.FUTURE]: (points) => points.filter((point) => isPointFuture(point.dateFrom)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => isPointPresent(point.dateFrom, point.dateTo)),
+  [FilterType.PAST]: (points) => points.filter((point) => isPointPast(point.dateTo)),
+};
+
+export {
+  getRandomArrayElement,
+  getRandomNumber,
+  humanizeTripDueDate,
+  getPointDuration,
+  sortPointDay,
+  sortPointPrice,
+  filter
+};

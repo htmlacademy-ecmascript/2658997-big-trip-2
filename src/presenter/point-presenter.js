@@ -1,6 +1,7 @@
 import { render, replace, remove } from '../framework/render.js';
 import TripPointView from '../view/trip-point-view.js';
 import EditPointView from '../view/edit-point-view.js';
+import { UserAction, UpdateType } from '../const.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -31,12 +32,14 @@ export default class PointPresenter {
     const prevEditPointComponent = this.#editPointComponent;
 
     const destination = destinations.find((item) => item.id === point.destination);
-    const offersForType = offers.find((item) => item.type === point.type).offers;
+    const pointDestination = destination || {};
+    const offersByType = offers.find((item) => item.type === point.type);
+    const offersForType = offersByType ? offersByType.offers : [];
     const selectedOffers = offersForType.filter((item) => point.offers.includes(item.id));
 
     this.#pointComponent = new TripPointView({
       point: this.#point,
-      destination,
+      destination: pointDestination,
       offers: selectedOffers,
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClickHandler,
@@ -48,6 +51,7 @@ export default class PointPresenter {
       offers,
       onFormSubmit: this.#handleFormSubmit,
       onRollupClick: this.#handleRollupClick,
+      onDeleteClick: this.#handleDeleteClick,
     });
 
     if (prevPointComponent === null || prevEditPointComponent === null) {
@@ -107,7 +111,20 @@ export default class PointPresenter {
     this.#replacePointToForm();
   };
 
-  #handleFormSubmit = () => {
+  #handleDeleteClick = (point) => {
+    this.#handleDataChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MAJOR,
+      point,
+    );
+  };
+
+  #handleFormSubmit = (point) => {
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
     this.#replaceFormToPoint();
   };
 
@@ -116,6 +133,10 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClickHandler = () => {
-    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      {...this.#point, isFavorite: !this.#point.isFavorite}
+    );
   };
 }
