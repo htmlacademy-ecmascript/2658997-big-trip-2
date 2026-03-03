@@ -46,6 +46,20 @@ const UpdateType = {
   PATCH: 'patch',
   MINOR: 'minor',
   MAJOR: 'major',
+  INIT: 'init',
+};
+
+const ApiMethod = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
+};
+
+const ApiUrl = {
+  POINTS: 'points',
+  DESTINATIONS: 'destinations',
+  OFFERS: 'offers',
 };
 
 export {
@@ -57,4 +71,6 @@ export {
   FilterType,
   UserAction,
   UpdateType,
+  ApiMethod,
+  ApiUrl,
 };

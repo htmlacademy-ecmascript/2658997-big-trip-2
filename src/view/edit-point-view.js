@@ -297,7 +297,12 @@ export default class EditPointView extends AbstractStatefulView {
       offers: updatedOffers,
     });
 
-    this.#handleFormSubmit(EditPointView.parseStateToPoint(this._state));
+    this.#handleFormSubmit(
+      EditPointView.parseStateToPoint({
+        ...this._state,
+        offers: updatedOffers
+      })
+    );
   };
 
   #rollupClickHandler = (evt) => {
@@ -326,6 +331,7 @@ export default class EditPointView extends AbstractStatefulView {
     }
 
     this.element.querySelector('.event__save-btn').disabled = false;
+
     this.updateElement({
       destination: newDestination.id,
     });

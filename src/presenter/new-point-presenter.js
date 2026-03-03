@@ -24,8 +24,8 @@ export default class NewPointPresenter {
     const blankPoint = {
       basePrice: 0,
       dateFrom: new Date().toISOString(),
-      dateTo: new Date().toISOString(),
-      destination: '',
+      dateTo: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      destination: null,
       isFavorite: false,
       offers: [],
       type: 'flight'
@@ -63,7 +63,7 @@ export default class NewPointPresenter {
       UserAction.ADD_POINT,
       UpdateType.MAJOR,
 
-      {...point, id: crypto.randomUUID()},
+      point,
     );
     this.destroy();
   };
