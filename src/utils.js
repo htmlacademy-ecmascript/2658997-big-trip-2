@@ -45,7 +45,7 @@ function sortPointPrice(pointA, pointB) {
 }
 
 function isPointFuture(dateFrom) {
-  return dayjs().isBefore(dateFrom);
+  return dayjs().isBefore(dayjs(dateFrom), 'minute');
 }
 
 function isPointPresent(dateFrom, dateTo) {
@@ -53,7 +53,7 @@ function isPointPresent(dateFrom, dateTo) {
 }
 
 function isPointPast(dateTo) {
-  return dayjs().isAfter(dateTo, 'day');
+  return dayjs().isAfter(dayjs(dateTo), 'minute');
 }
 
 const filter = {

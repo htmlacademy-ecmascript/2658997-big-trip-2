@@ -1,7 +1,7 @@
 import { render, replace, remove } from '../framework/render.js';
+import { UserAction, UpdateType } from '../const.js';
 import TripPointView from '../view/trip-point-view.js';
 import EditPointView from '../view/edit-point-view.js';
-import { UserAction, UpdateType } from '../const.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
