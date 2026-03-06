@@ -1,6 +1,7 @@
 import { render, remove, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-import { UserAction, UpdateType } from '../const.js';
+import { UserAction, UpdateType, POINT_BLANK, Duration } from '../const.js';
+import dayjs from 'dayjs';
 
 export default class NewPointPresenter {
   #container = null;
@@ -22,13 +23,9 @@ export default class NewPointPresenter {
 
 
     const blankPoint = {
-      basePrice: 0,
-      dateFrom: new Date().toISOString(),
-      dateTo: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
-      destination: null,
-      isFavorite: false,
-      offers: [],
-      type: 'flight'
+      ...POINT_BLANK,
+      dateFrom: dayjs().toISOString(),
+      dateTo: dayjs().add(Duration.HOUR, 'hour').toISOString(),
     };
 
     this.#pointEditComponent = new EditPointView({
@@ -42,7 +39,7 @@ export default class NewPointPresenter {
 
     render(this.#pointEditComponent, this.#container, RenderPosition.AFTERBEGIN);
 
-    document.addEventListener('keydown', this.#escKeydownHandler);
+    document.addEventListener('keydown', this.#handleEscKeydown);
   }
 
   setSaving() {
@@ -74,7 +71,7 @@ export default class NewPointPresenter {
     remove(this.#pointEditComponent);
     this.#pointEditComponent = null;
 
-    document.removeEventListener('keydown', this.#escKeydownHandler);
+    document.removeEventListener('keydown', this.#handleEscKeydown);
   }
 
   #handleFormSubmit = (point) => {
@@ -91,7 +88,7 @@ export default class NewPointPresenter {
     this.destroy();
   };
 
-  #escKeydownHandler = (evt) => {
+  #handleEscKeydown = (evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
       this.destroy();

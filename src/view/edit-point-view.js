@@ -3,6 +3,7 @@ import { TRIP_TYPES } from '../const.js';
 import { humanizeTripDueDate } from '../utils.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import he from 'he';
 
 function createTypeItemTemplate (type, currentType, isDisabled) {
   return `
@@ -14,7 +15,7 @@ function createTypeItemTemplate (type, currentType, isDisabled) {
 }
 
 function createDestinationOptionTemplate (destination) {
-  return `<option value="${destination.name}"></option>`;
+  return `<option value="${he.encode(destination.name)}"></option>`;
 }
 
 function createPictureTemplate(picture) {
@@ -36,7 +37,7 @@ function createOfferTemplate (offer, selectedOffers, isDisabled) {
              ${isDisabled ? 'disabled' : ''}
       >
       <label class="event__offer-label" for="event-offer-${id}">
-        <span class="event__offer-title">${title}</span>
+        <span class="event__offer-title">${he.encode(title)}</span>
         &plus;&euro;&nbsp;
         <span class="event__offer-price">${price}</span>
       </label>
@@ -45,7 +46,6 @@ function createOfferTemplate (offer, selectedOffers, isDisabled) {
 }
 
 function createEditPointTemplate(point, destinations, offers) {
-
   const {
     type,
     basePrice,
@@ -107,7 +107,7 @@ function createEditPointTemplate(point, destinations, offers) {
                     <input class="event__input  event__input--destination"
                            id="event-destination-1" type="text"
                            name="event-destination"
-                           value="${pointDestination.name || ''}"
+                           value="${he.encode(pointDestination.name || '')}"
                            list="destination-list-1"
                            ${isDisabled ? 'disabled' : ''}
                     >
@@ -137,7 +137,8 @@ function createEditPointTemplate(point, destinations, offers) {
                     >
                   </div>
 
-                  <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>
+                  <button class="event__save-btn  btn  btn--blue" type="submit"
+                    ${(isDisabled || !point.isDestinationValid) ? 'disabled' : ''}>
                     ${isSaving ? 'Saving...' : 'Save'}
                   </button>
                   <button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>
@@ -147,32 +148,38 @@ function createEditPointTemplate(point, destinations, offers) {
                     <span class="visually-hidden">Open event</span>
                   </button>
                 </header>
-                <section class="event__details">
-                  ${offersByType.length > 0 ? `
-                    <section class="event__section  event__section--offers">
-                    <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+                ${(offersByType.length > 0 || pointDestination.description || (pointDestination.pictures && pointDestination.pictures.length > 0)) ? `
+                  <section class="event__details">
 
-                    <div class="event__available-offers">
-                      ${offersTemplate}
-                    </div>
-                  </section>
-                  ` : ''}
-
-                  <section class="event__section  event__section--destination">
-                    ${pointDestination.description ? `
-                      <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                      <p class="event__destination-description">${pointDestination.description}</p>
+                    ${offersByType.length > 0 ? `
+                      <section class="event__section  event__section--offers">
+                        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+                        <div class="event__available-offers">
+                          ${offersTemplate}
+                        </div>
+                      </section>
                     ` : ''}
 
-                    <div class="event__photos-container">
-                      ${picturesTemplate ? `
-                        <div class="event__photos-tape">
-                          ${picturesTemplate}
-                        </div>
-                      ` : ''}
-                    </div>
+                    ${(pointDestination.description || (pointDestination.pictures && pointDestination.pictures.length > 0)) ? `
+                      <section class="event__section  event__section--destination">
+                        <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+
+                        ${pointDestination.description ? `
+                          <p class="event__destination-description">${he.encode(pointDestination.description)}</p>
+                        ` : ''}
+
+                        ${(pointDestination.pictures && pointDestination.pictures.length > 0) ? `
+                          <div class="event__photos-container">
+                            <div class="event__photos-tape">
+                              ${picturesTemplate}
+                            </div>
+                          </div>
+                        ` : ''}
+                      </section>
+                    ` : ''}
+
                   </section>
-                </section>
+                ` : ''}
               </form>
             </li>`;
 }
@@ -200,6 +207,16 @@ export default class EditPointView extends AbstractStatefulView {
     this.#handleDeleteClick = onDeleteClick;
 
     this._restoreHandlers();
+  }
+
+  get template() {
+    return createEditPointTemplate(this._state, this.#destinations, this.#offers);
+  }
+
+  reset(point) {
+    this.updateElement(
+      EditPointView.parsePointToState(point),
+    );
   }
 
   removeElement() {
@@ -300,34 +317,6 @@ export default class EditPointView extends AbstractStatefulView {
     );
   }
 
-  static parsePointToState(point) {
-    return {...point,
-      isDisabled: false,
-      isSaving: false,
-      isDeleting: false,
-    };
-  }
-
-  static parseStateToPoint(state) {
-    const point = {...state};
-
-    delete point.isDisabled;
-    delete point.isSaving;
-    delete point.isDeleting;
-
-    return point;
-  }
-
-  get template() {
-    return createEditPointTemplate(this._state, this.#destinations, this.#offers);
-  }
-
-  reset(point) {
-    this.updateElement(
-      EditPointView.parsePointToState(point),
-    );
-  }
-
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
 
@@ -374,14 +363,16 @@ export default class EditPointView extends AbstractStatefulView {
     const newDestination = this.#destinations.find((item) => item.name === name);
 
     if (!newDestination) {
-      this.element.querySelector('.event__save-btn').disabled = true;
+      this.updateElement({
+        destination: null,
+        isDestinationValid: false,
+      });
       return;
     }
 
-    this.element.querySelector('.event__save-btn').disabled = false;
-
     this.updateElement({
       destination: newDestination.id,
+      isDestinationValid: true,
     });
   };
 
@@ -410,4 +401,24 @@ export default class EditPointView extends AbstractStatefulView {
       });
     }
   };
+
+  static parsePointToState(point) {
+    return {...point,
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+      isDestinationValid: !!point.destination,
+    };
+  }
+
+  static parseStateToPoint(state) {
+    const point = {...state};
+
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+    delete point.isDestinationValid;
+
+    return point;
+  }
 }
