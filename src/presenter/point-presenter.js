@@ -37,7 +37,7 @@ export default class PointPresenter {
       destination: pointDestination,
       offers: selectedOffers,
       onEditClick: this.#handleEditClick,
-      onFavoriteClick: this.#handleFavoriteClickHandler,
+      onFavoriteClick: this.#handleFavoriteClick,
     });
 
     this.#editPointComponent = new EditPointView({
@@ -115,7 +115,7 @@ export default class PointPresenter {
 
   #replacePointToForm() {
     replace(this.#editPointComponent, this.#pointComponent);
-    document.addEventListener('keydown', this.#escKeydownHandler);
+    document.addEventListener('keydown', this.#handleEscKeydown);
 
     this.#handleModeChange();
     this.#mode = Mode.EDITING;
@@ -125,12 +125,12 @@ export default class PointPresenter {
     this.#editPointComponent.reset(this.#point);
 
     replace(this.#pointComponent, this.#editPointComponent);
-    document.removeEventListener('keydown', this.#escKeydownHandler);
+    document.removeEventListener('keydown', this.#handleEscKeydown);
 
     this.#mode = Mode.DEFAULT;
   }
 
-  #escKeydownHandler = (evt) => {
+  #handleEscKeydown = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       this.#replaceFormToPoint();
@@ -162,7 +162,7 @@ export default class PointPresenter {
     this.#replaceFormToPoint();
   };
 
-  #handleFavoriteClickHandler = () => {
+  #handleFavoriteClick = () => {
     this.#handleDataChange(
       UserAction.UPDATE_POINT,
       UpdateType.PATCH,

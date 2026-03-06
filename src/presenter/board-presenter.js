@@ -35,7 +35,7 @@ export default class BoardPresenter {
     this.#filterModel = filterModel;
 
     this.#newPointPresenter = new NewPointPresenter({
-      container: this.#eventsListComponent.element,
+      container: this.#eventsListComponent.listElement,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy
     });

@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view';
 import { humanizeTripDueDate, sortPointDay } from '../utils.js';
+import { DESTINATION_COUNT_MAX_VISIBLE } from '../const.js';
 
 function createTripInfoTemplate(points, destinations, offers) {
   const totalCost = points.reduce((total, point) => {
@@ -16,7 +17,7 @@ function createTripInfoTemplate(points, destinations, offers) {
     destinations.find((d) => d.id === point.destination)?.name || ''
   );
 
-  const title = routeCities.length > 3
+  const title = routeCities.length > DESTINATION_COUNT_MAX_VISIBLE
     ? `${routeCities[0]} &mdash; ... &mdash; ${routeCities[routeCities.length - 1]}`
     : routeCities.join(' &mdash; ');
 
