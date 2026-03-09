@@ -1,6 +1,6 @@
 import { render, remove, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-import { UserAction, UpdateType, POINT_BLANK, Duration } from '../const.js';
+import { UserAction, UpdateType, PointBlank, Duration } from '../const.js';
 import dayjs from 'dayjs';
 
 export default class NewPointPresenter {
@@ -23,7 +23,7 @@ export default class NewPointPresenter {
 
 
     const blankPoint = {
-      ...POINT_BLANK,
+      ...PointBlank,
       dateFrom: dayjs().toISOString(),
       dateTo: dayjs().add(Duration.HOUR, 'hour').toISOString(),
     };
@@ -78,7 +78,6 @@ export default class NewPointPresenter {
     this.#handleDataChange(
       UserAction.ADD_POINT,
       UpdateType.MAJOR,
-
       point,
     );
     this.destroy();

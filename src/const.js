@@ -1,14 +1,14 @@
 const DESTINATION_COUNT_MAX_VISIBLE = 3;
 const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-const NO_POINTS_MESSAGES = {
+const NoPointsMessage = {
   everything: 'Click New Event to create your first point',
   future: 'There are no future events now',
   present: 'There are no present events now',
   past: 'There are no past events now',
 };
 
-const POINT_BLANK = {
+const PointBlank = {
   basePrice: 0,
   dateFrom: null,
   dateTo: null,
@@ -70,10 +70,10 @@ const Mode = {
 
 export {
   DESTINATION_COUNT_MAX_VISIBLE,
-  POINT_BLANK,
+  PointBlank,
   Duration,
   TRIP_TYPES,
-  NO_POINTS_MESSAGES,
+  NoPointsMessage,
   SortType,
   FilterType,
   UserAction,

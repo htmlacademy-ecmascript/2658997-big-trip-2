@@ -61,7 +61,7 @@ export default class BoardPresenter {
         return filteredPoints.sort(sortPointTime);
 
       default:
-        return filteredPoints.sort(sortPointPrice);
+        return filteredPoints.sort(sortPointDay);
     }
   }
 
@@ -175,7 +175,7 @@ export default class BoardPresenter {
     remove(this.#noPointsComponent);
 
     if (resetSortType) {
-      this.#sortsModel.setSort(UpdateType.PATCH, SortType.PRICE);
+      this.#sortsModel.setSort(UpdateType.PATCH, SortType.DAY);
     }
   }
 
