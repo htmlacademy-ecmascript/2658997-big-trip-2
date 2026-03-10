@@ -72,6 +72,13 @@ export default class BoardPresenter {
   createPoint() {
     this.#sortsModel.setSort(UpdateType.MAJOR, SortType.DAY);
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+
+    if (this.#noPointsComponent) {
+      remove(this.#noPointsComponent);
+    }
+
+    render(this.#eventsListComponent, this.#container);
+
     this.#newPointPresenter.init(this.#pointsModel.destinations, this.#pointsModel.offers);
   }
 
@@ -207,13 +214,15 @@ export default class BoardPresenter {
     const points = this.points;
     const pointsCount = points.length;
 
+    render(this.#eventsListComponent, this.#container);
+
     if (pointsCount === 0) {
       this.#renderNoPoints();
       return;
     }
 
+    remove(this.#noPointsComponent);
     this.#renderSort();
-    render(this.#eventsListComponent, this.#container);
 
     points.forEach((point) => {
       this.#renderPoint(point, this.#pointsModel.destinations, this.#pointsModel.offers);
